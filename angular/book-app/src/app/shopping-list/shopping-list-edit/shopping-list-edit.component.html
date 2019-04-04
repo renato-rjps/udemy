@@ -1,0 +1,36 @@
+<form #ingredientForm
+      (submit)="onSubmit(ingredientForm)">
+
+  <div class="row">
+    <div class="col-12 col-sm-10">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input #name
+               type="text"
+               class="form-control form-control-sm"
+               id="name"
+               aria-describedby="name"
+               placeholder="Enter the name">
+      </div>
+    </div>
+    <div class="col-4 col-sm-2">
+      <div class="form-group">
+        <label for="amount">Amount</label>
+        <input #amount
+               type="number"
+               class="form-control form-control-sm"
+               id="amount"
+               aria-describedby="amount"
+               placeholder="Amount">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 d-flex justify-content-end">
+      <button type="reset"
+              class="btn btn-outline-secondary btn-sm mr-1">Cancel</button>
+      <button class="btn btn-outline-danger btn-sm mr-1">Delete</button>
+      <button class="btn btn-outline-primary btn-sm mr-1">Save</button>
+    </div>
+  </div>
+</form>
