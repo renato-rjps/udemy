@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Ingredient } from '../model/ingredient.model';
-import * as _ from 'lodash';
+import { ShoppingService } from '../services/shopping.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -9,27 +9,18 @@ import * as _ from 'lodash';
 })
 export class ShoppingListComponent implements OnInit {
 
-  ingredients: Ingredient[] = [];
+  ingredients: Ingredient[];
   selectedIngredient: Ingredient;
 
-  constructor() { }
+
+  constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit() {
-    this.ingredients.push(new Ingredient('Apple', 2));
-    this.ingredients.push(new Ingredient('Orange', 5));
-  }
-
-  onCreateIngredient(ingredient: Ingredient) {
-    this.ingredients.push(ingredient);
+    this.ingredients = this.shoppingService.getIngredients();
   }
 
   onClick(ingredient: Ingredient) {
-    console.log(ingredient);
     this.selectedIngredient = ingredient;
+    this.shoppingService.selectedIngredient.next(ingredient);
   }
-
-  onRemove(ingredient: Ingredient) {
-    _.remove(this.ingredients, ingredient);
-  }
-
 }

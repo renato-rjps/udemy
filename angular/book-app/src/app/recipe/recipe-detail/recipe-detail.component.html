@@ -1,17 +1,46 @@
-<div class="btn-group"
-     role="group"
-     appDropdown>
-  <button id="btnGroupDrop1"
-          type="button"
-          class="btn btn-sm btn-secondary dropdown-toggle"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false">
-    Dropdown
-  </button>
-  <div class="dropdown-menu"
-       aria-labelledby="btnGroupDrop1">
-    <a class="dropdown-item">Dropdown link</a>
-    <a class="dropdown-item">Dropdown link</a>
+<div class="d-flex justify-content-center">
+  <div *ngIf="selectedRecipe"
+       class="card w-50">
+    <img class="card-img-top"
+         [src]="selectedRecipe.imagePath"
+         [alt]="selectedRecipe.name" />
+
+    <div class="card-body">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="card-title">{{selectedRecipe.name}}</h5>
+        <div class="btn-group"
+             role="group"
+             appDropdown>
+          <button id="btnGroupDrop1"
+                  type="button"
+                  class="btn btn-sm btn-secondary dropdown-toggle"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false">
+            Select an Action
+          </button>
+          <div class="dropdown-menu"
+               aria-labelledby="btnGroupDrop1">
+            <a class="dropdown-item">Edit</a>
+            <a class="dropdown-item">Remove</a>
+          </div>
+        </div>
+      </div>
+      <p class="card-text">{{selectedRecipe.description}}</p>
+    </div>
+    <h6 class="px-4">Ingredients:</h6>
+    <ul class="list-group list-group-flush">
+      <li *ngFor="let ingredient of selectedRecipe.ingredients"
+          class="list-group-item d-flex justify-content-between align-items-center">
+        {{ingredient.name}}
+        <span class="badge badge-primary badge-pill">{{ingredient.amount}}</span>
+      </li>
+    </ul>
+    <div class="card-body">
+      <a href="#"
+         class="card-link">Card link</a>
+      <a href="#"
+         class="card-link">Another link</a>
+    </div>
   </div>
 </div>

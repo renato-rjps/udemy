@@ -18,9 +18,8 @@ export class DropdownDirective implements OnInit {
   }
 
   @HostListener('document:click', ['$event'])
-  onClick(event) {
+  onClick(event: MouseEvent) {
 
-    console.log(event)
     // If was clicked out close the dropdown
     if (!this.dropDownElement.contains(event.target)) {
       this.render.removeClass(this.dropDownMenuElement, 'show');

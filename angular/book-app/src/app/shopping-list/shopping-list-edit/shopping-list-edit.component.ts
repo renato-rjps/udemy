@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { Ingredient } from 'src/app/model/ingredient.model';
+import { ShoppingService } from 'src/app/services/shopping.service';
 
 @Component({
   selector: 'app-shopping-list-edit',
@@ -16,19 +17,42 @@ export class ShoppingListEditComponent implements OnInit {
   @ViewChild('ingredientForm')
   form: any;
 
-  @Output()
-  createIngredient = new EventEmitter<Ingredient>();
+  private selectedIngredient: Ingredient;
 
-  constructor() { }
+  constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit() {
+    this.shoppingService.selectedIngredient.subscribe(ingredient => {
+      this.name.nativeElement.value = ingredient.name;
+      this.amount.nativeElement.value = ingredient.amount;
+      this.selectedIngredient = ingredient;
+    })
   }
 
   onSubmit() {
     const name: string = this.name.nativeElement.value;
     const amount: number = this.amount.nativeElement.value;
-    this.createIngredient.emit(new Ingredient(name, amount));
+
+    if (!name || !amount) {
+      alert('Todos os campos devem ser informados');
+      return;
+    }
+
+    if (this.selectedIngredient) {
+      this.shoppingService.editIngredient(this.selectedIngredient, new Ingredient(name, amount));
+      this.selectedIngredient = null;
+    } else {
+      this.shoppingService.saveIngredient(new Ingredient(name, amount));
+    }
+
     this.form.nativeElement.reset();
+  }
+
+  onRemove() {
+    if (this.selectedIngredient) {
+      this.shoppingService.removeIngredient(this.selectedIngredient);
+      this.selectedIngredient = null;
+    }
   }
 
 }
