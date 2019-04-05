@@ -1,3 +1,6 @@
-.ingredient {
-  cursor: pointer;
+.active {
+  .badge-primary {
+    background: white;
+    color: black;
+  }
 }

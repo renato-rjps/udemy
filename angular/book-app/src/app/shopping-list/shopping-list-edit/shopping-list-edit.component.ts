@@ -22,11 +22,11 @@ export class ShoppingListEditComponent implements OnInit {
   constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit() {
-    this.shoppingService.selectedIngredient.subscribe(ingredient => {
+    /* this.shoppingService.selectedIngredient.subscribe(ingredient => {
       this.name.nativeElement.value = ingredient.name;
       this.amount.nativeElement.value = ingredient.amount;
       this.selectedIngredient = ingredient;
-    })
+    }) */
   }
 
   onSubmit() {

@@ -17,14 +17,14 @@ export class RecipeDetailComponent implements OnInit, CanDeactivateComponent {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      console.log('>>>', params);
       const id = params.get('id');
       this.selectedRecipe = this.recipeService.getRecipeById(+id);
     })
   }
 
   canDeactivate() {
-    return confirm('Do you wont to leave this page?');
+    //return confirm('Do you wont to leave this page?');
+    return true;
   }
 
 }

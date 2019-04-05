@@ -9,7 +9,6 @@ import { Ingredient } from '../model/ingredient.model';
 export class ShoppingService {
 
   private ingredients: Ingredient[];
-  selectedIngredient = new Subject<Ingredient>();
 
   constructor() {
     this.ingredients = [new Ingredient('Apple', 2), new Ingredient('Orange', 5)]
