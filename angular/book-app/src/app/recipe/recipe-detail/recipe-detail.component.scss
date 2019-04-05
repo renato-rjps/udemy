@@ -1,0 +1,11 @@
+@import '~bootstrap/scss/_functions';
+@import '~bootstrap/scss/_variables';
+@import '~bootstrap/scss/mixins/_breakpoints';
+
+.card {
+  width: 100%;
+
+  @include media-breakpoint-up(sm) {
+    width: 50%;
+  }
+}

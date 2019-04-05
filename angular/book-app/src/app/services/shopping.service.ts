@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Ingredient } from '../model/ingredient.model';
 import * as _ from 'lodash';
 import { Subject } from 'rxjs';
+import { Ingredient } from '../model/ingredient.model';
 
 @Injectable({
   providedIn: 'root'

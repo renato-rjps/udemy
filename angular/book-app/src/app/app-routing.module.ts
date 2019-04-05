@@ -3,15 +3,21 @@ import { Routes, RouterModule } from '@angular/router';
 import { RecipeComponent } from './recipe/recipe.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.component';
+import { CanLeaveComponentGuard } from './services/can-leave-component.guard';
+import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/recipe' },
   {
     path: 'recipe', component: RecipeComponent,
     children: [
-      { path: ':id', component: RecipeDetailComponent }]
+      { path: 'new', component: RecipeEditComponent },
+      { path: ':id', component: RecipeDetailComponent, canDeactivate: [CanLeaveComponentGuard] },
+      { path: ':id/edit', component: RecipeEditComponent }
+    ]
   },
-  { path: 'shopping-list', component: ShoppingListComponent }
+  { path: 'shopping-list', component: ShoppingListComponent },
+  { path: '**', redirectTo: '/recipe', pathMatch: 'full' }
 ];
 
 @NgModule({
