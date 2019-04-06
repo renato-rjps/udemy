@@ -3,6 +3,7 @@ import { RecipeService } from 'src/app/services/recipe.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from 'src/app/model/recipe.model';
 import { CanDeactivateComponent } from 'src/app/services/can-leave-component.guard';
+import { ShoppingService } from 'src/app/services/shopping.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -14,7 +15,11 @@ export class RecipeDetailComponent implements OnInit, CanDeactivateComponent {
   selectedRecipe: Recipe;
   id: number;
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private recipeService: RecipeService,
+    private shoppingService: ShoppingService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -26,6 +31,11 @@ export class RecipeDetailComponent implements OnInit, CanDeactivateComponent {
   onDelete() {
     this.recipeService.removeRecipe(this.id);
     this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  sendToShoppingList() {
+    this.shoppingService.saveIngredients(this.selectedRecipe.ingredients.slice());
+    this.router.navigate(['shopping-list']);
   }
 
   canDeactivate() {

@@ -12,7 +12,7 @@ export class ShoppingService {
   selectedIngredient = new Subject<number>();
 
   constructor() {
-    this.ingredients = [new Ingredient('Apple', 2), new Ingredient('Orange', 5)]
+    this.ingredients = [new Ingredient('W', 2), new Ingredient('Orange', 5), new Ingredient('Apple', 2)];
   }
 
   getIngredients() {
@@ -21,6 +21,10 @@ export class ShoppingService {
 
   saveIngredient(ingredient: Ingredient) {
     return this.ingredients.push(ingredient);
+  }
+
+  saveIngredients(ingredients: Ingredient[]) {
+    return this.ingredients.push(...ingredients);
   }
 
   removeIngredient(ingredient: Ingredient) {
