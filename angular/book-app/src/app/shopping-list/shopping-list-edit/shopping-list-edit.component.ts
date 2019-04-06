@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ShoppingService } from 'src/app/services/shopping.service';
 import { Ingredient } from 'src/app/model/ingredient.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-shopping-list-edit',
@@ -8,51 +9,41 @@ import { Ingredient } from 'src/app/model/ingredient.model';
   styleUrls: ['./shopping-list-edit.component.scss']
 })
 export class ShoppingListEditComponent implements OnInit {
-  @ViewChild('name')
-  name: ElementRef;
 
-  @ViewChild('amount')
-  amount: ElementRef;
-
-  @ViewChild('ingredientForm')
-  form: any;
+  @ViewChild(NgForm) form: NgForm;
 
   private selectedIngredient: Ingredient;
-
   constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit() {
-    /* this.shoppingService.selectedIngredient.subscribe(ingredient => {
-      this.name.nativeElement.value = ingredient.name;
-      this.amount.nativeElement.value = ingredient.amount;
-      this.selectedIngredient = ingredient;
-    }) */
+    this.shoppingService.selectedIngredient.subscribe(index => {
+      this.selectedIngredient = this.shoppingService.getIngredients()[index];
+      this.form.setValue({ name: this.selectedIngredient.name, amount: this.selectedIngredient.amount });
+    });
   }
 
   onSubmit() {
-    const name: string = this.name.nativeElement.value;
-    const amount: number = this.amount.nativeElement.value;
-
-    if (!name || !amount) {
-      alert('Todos os campos devem ser informados');
-      return;
-    }
+    const name: string = this.form.value.name;
+    const amount: number = this.form.value.amount;
 
     if (this.selectedIngredient) {
       this.shoppingService.editIngredient(this.selectedIngredient, new Ingredient(name, amount));
-      this.selectedIngredient = null;
-    } else {
-      this.shoppingService.saveIngredient(new Ingredient(name, amount));
+      this.cancel();
+      return;
     }
 
-    this.form.nativeElement.reset();
+    this.shoppingService.saveIngredient(new Ingredient(name, amount));
+    this.cancel();
   }
 
   onRemove() {
-    if (this.selectedIngredient) {
-      this.shoppingService.removeIngredient(this.selectedIngredient);
-      this.selectedIngredient = null;
-    }
+    this.shoppingService.removeIngredient(this.selectedIngredient);
+    this.cancel();
+  }
+
+  cancel() {
+    this.selectedIngredient = null;
+    this.form.reset();
   }
 
 }

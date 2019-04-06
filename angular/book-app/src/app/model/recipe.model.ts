@@ -6,7 +6,6 @@ export class Recipe {
     public description: string,
     public imagePath: string,
     public ingredients: Ingredient[] = [],
-    public id: number = Math.floor(Math.random() * Math.floor(10000))
   ) { }
 
 }

@@ -24,7 +24,9 @@
             <a class="dropdown-item"
                [routerLink]="['edit']">Edit</a>
             <a class="dropdown-item"
-               routerLink="new">Remove</a>
+               [routerLink]="['edit']">Send to Shopping List</a>
+            <a class="dropdown-item"
+               (click)="onDelete()">Remove</a>
           </div>
         </div>
       </div>

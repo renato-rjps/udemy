@@ -1,38 +1,60 @@
-<form #ingredientForm
-      (submit)="onSubmit(ingredientForm)">
+<form #formIngredients="ngForm"
+      (ngSubmit)="onSubmit(formIngredients)">
 
   <div class="row">
     <div class="col-12 col-sm-10">
       <div class="form-group">
-        <label for="name">Name</label>
-        <input #name
+        <label for="name">Name <span class="text-danger"
+                *ngIf="!name.valid && name.touched">*</span> </label>
+        <input ngModel
+               name="name"
                type="text"
                class="form-control form-control-sm"
-               id="name"
                aria-describedby="name"
-               placeholder="Enter the name">
+               placeholder="Enter the name"
+               #name="ngModel"
+               required>
       </div>
     </div>
     <div class="col-4 col-sm-2">
       <div class="form-group">
-        <label for="amount">Amount</label>
-        <input #amount
+        <label for="amount">Amount <span class="text-danger"
+                *ngIf="!amount.valid && amount.touched">*</span></label>
+        <input ngModel
+               #amount="ngModel"
+               name="amount"
                type="number"
                class="form-control form-control-sm"
-               id="amount"
                aria-describedby="amount"
-               placeholder="Amount">
+               placeholder="Amount"
+               required
+               pattern="^[1-9]+[0-9]*$">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="radio"
+           *ngFor="let gender of genders">
+        <input type="radio"
+               name="gender"
+               ngModel
+               [value]="gender">
+        {{gender}}
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-12 d-flex justify-content-end">
       <button type="reset"
+              (click)="cancel()"
               class="btn btn-outline-secondary btn-sm mr-1">Cancel</button>
-      <button type="button"
-              (click)="onRemove()"
+      <button (click)="onRemove()"
+              *ngIf="selectedIngredient"
               class="btn btn-outline-danger btn-sm mr-1">Delete</button>
-      <button class="btn btn-outline-success btn-sm mr-1">Save</button>
+      <button type="submit"
+              class="btn btn-outline-success btn-sm mr-1"
+              [disabled]="formIngredients.invalid">Save</button>
     </div>
   </div>
 </form>

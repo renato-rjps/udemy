@@ -8,8 +8,8 @@ import { Recipe } from 'src/app/model/recipe.model';
 })
 export class RecipeItemComponent implements OnInit {
 
-  @Input()
-  recipe: Recipe;
+  @Input() recipe: Recipe;
+  @Input() index: number;
 
   constructor() { }
 

@@ -10,6 +10,7 @@ import { ShoppingService } from '../services/shopping.service';
 export class ShoppingListComponent implements OnInit {
 
   ingredients: Ingredient[];
+  selectedIndex: number;
 
   constructor(private shoppingService: ShoppingService) { }
 
@@ -17,4 +18,8 @@ export class ShoppingListComponent implements OnInit {
     this.ingredients = this.shoppingService.getIngredients();
   }
 
+  onSelect(index: number): void {
+    this.selectedIndex = index;
+    this.shoppingService.selectedIngredient.next(index);
+  }
 }
