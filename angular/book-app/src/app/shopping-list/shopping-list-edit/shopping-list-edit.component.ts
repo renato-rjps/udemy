@@ -1,25 +1,36 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { ShoppingService } from 'src/app/services/shopping.service';
 import { Ingredient } from 'src/app/model/ingredient.model';
 import { NgForm } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shopping-list-edit',
   templateUrl: './shopping-list-edit.component.html',
   styleUrls: ['./shopping-list-edit.component.scss']
 })
-export class ShoppingListEditComponent implements OnInit {
+export class ShoppingListEditComponent implements OnInit, OnDestroy {
 
   @ViewChild(NgForm) form: NgForm;
 
   private selectedIngredient: Ingredient;
+  private unsubscribeAll = new Subject();
   constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit() {
-    this.shoppingService.selectedIngredient.subscribe(index => {
-      this.selectedIngredient = this.shoppingService.getIngredients()[index];
-      this.form.setValue({ name: this.selectedIngredient.name, amount: this.selectedIngredient.amount });
-    });
+    this.shoppingService.
+      selectedIngredient
+      .pipe(takeUntil(this.unsubscribeAll))
+      .subscribe(index => {
+        this.selectedIngredient = this.shoppingService.getIngredients()[index];
+        this.form.setValue({ name: this.selectedIngredient.name, amount: this.selectedIngredient.amount });
+      });
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeAll.next();
+    this.unsubscribeAll.complete();
   }
 
   onSubmit() {
