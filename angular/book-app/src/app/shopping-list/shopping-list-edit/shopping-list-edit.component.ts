@@ -14,7 +14,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
 
   @ViewChild(NgForm) form: NgForm;
 
-  private selectedIngredient: Ingredient;
+  selectedIngredient: Ingredient;
   private unsubscribeAll = new Subject();
   constructor(private shoppingService: ShoppingService) { }
 

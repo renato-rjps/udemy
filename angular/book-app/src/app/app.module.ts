@@ -4,20 +4,15 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { RecipeModule } from './recipe/recipe.module';
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
   ],
   imports: [
     BrowserModule,
-    RecipeModule,
-    ShoppingListModule,
-    AppRoutingModule
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

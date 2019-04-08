@@ -9,9 +9,9 @@ import { CanLeaveComponentGuard } from '../services/can-leave-component.guard';
 
 const routes: Routes = [
   {
-    path: 'recipe', component: RecipeComponent,
+    path: '', component: RecipeComponent,
     children: [
-      { path: '', pathMatch: 'full', component: RecipeStartComponent },
+      { path: '', component: RecipeStartComponent },
       { path: 'new', component: RecipeEditComponent },
       { path: ':id', component: RecipeDetailComponent, canDeactivate: [CanLeaveComponentGuard] },
       { path: ':id/edit', component: RecipeEditComponent }
